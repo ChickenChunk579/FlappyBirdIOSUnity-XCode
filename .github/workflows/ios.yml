@@ -29,4 +29,4 @@ jobs:
           # Export the archive to an IPA file
           xcodebuild -exportArchive -archivePath unsigned.xcarchive -exportPath unsigned.ipa -exportOptionsPlist exportOptions.plist
         env:
-          scheme: ${{ 'Unity-iPhone' }}
+          scheme: 'Unity-iPhone'
