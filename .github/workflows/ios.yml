@@ -20,6 +20,8 @@ jobs:
           default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['targets'][0]")
           echo $default | cat >default
           echo Using default scheme: $default
+        env:
+          scheme: 'Unity-iPhone'
       - name: Build and Export IPA
         run: |
           # Archive the project
@@ -27,4 +29,4 @@ jobs:
           # Export the archive to an IPA file
           xcodebuild -exportArchive -archivePath unsigned.xcarchive -exportPath unsigned.ipa -exportOptionsPlist exportOptions.plist
         env:
-          scheme: ${{ 'default' }}
+          scheme: ${{ 'Unity-iPhone' }}
