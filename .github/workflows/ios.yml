@@ -1,0 +1,24 @@
+name: Build Unity to Xcode
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Unity Build
+      uses: akiojin/unity-build-github-action@v3.8.3
+      with:
+        build-target: 'iOS'
+        unity-version: '2021.3'
+        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+
+    - name: Xcode Build
+      uses: sersoft-gmbh/xcodebuild-action@v3.1
+      with:
+        project: Unity-iPhone.xcodeproj
+        output-directory: out-ios
+        team-id: 
+        export-method: 'development'
