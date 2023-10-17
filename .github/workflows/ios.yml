@@ -20,13 +20,11 @@ jobs:
           default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['targets'][0]")
           echo $default | cat >default
           echo Using default scheme: $default
-      - name: Build iOS
-        uses: sparkfabrik/ios-build-action@v2.3.2
-        with:
-          # Required parameters
-          project_path: <Xcode project path>
+      - name: Build and Export IPA
+        run: |
+          # Archive the project
+          xcodebuild archive -project <XCODEPROJ> -scheme ${{ 'default' }} -archivePath unsigned.xcarchive -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+          # Export the archive to an IPA file
+          xcodebuild -exportArchive -archivePath unsigned.xcarchive -exportPath unsigned.ipa -exportOptionsPlist exportOptions.plist
+        env:
           scheme: ${{ 'default' }}
-          # Optional parameters
-          export_method: 'development'
-          output_directory: <ipa output directory path>
-          team_id: 
