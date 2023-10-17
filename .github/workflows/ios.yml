@@ -14,11 +14,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: List Schemes
-        run: |
-          xcodebuild -list
       - name: Set Default Scheme
         run: |
           scheme_list=$(xcodebuild -list -json | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['schemes'][0]")
@@ -27,7 +22,7 @@ jobs:
       - name: Build and Export IPA
         run: |
           # Archive the project
-          xcodebuild archive -project Unity-iPhone.xcodeproj -scheme ${{ 'default' }} -archivePath unsigned.xcarchive -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+          xcodebuild archive -project Unity-iPhone.xcodeproj -archivePath unsigned.xcarchive -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
           # Export the archive to an IPA file
           xcodebuild -exportArchive -archivePath unsigned.xcarchive -exportPath unsigned.ipa -exportOptionsPlist exportOptions.plist
         env:
