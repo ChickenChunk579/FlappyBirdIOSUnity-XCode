@@ -17,7 +17,7 @@ jobs:
       - name: Build and Export IPA
         run: |
           # Archive the project
-          xcodebuild archive -project Unity-iPhone.xcodeproj -archivePath unsigned.xcarchive -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+          xcodebuild archive -project Unity-iPhone.xcodeproj -scheme Unity-iPhone -archivePath unsigned.xcarchive -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
           # Export the archive to an IPA file
           xcodebuild -exportArchive -archivePath unsigned.xcarchive -exportPath unsigned.ipa -exportOptionsPlist exportOptions.plist
         env:
