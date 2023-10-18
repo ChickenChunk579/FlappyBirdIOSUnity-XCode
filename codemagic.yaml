@@ -2,7 +2,6 @@ workflows:
   unity_ios_release_workflow:
     name: Unity iOS release workflow
     max_build_duration: 120
-    instance_type: mac_mini
     environment:
       vars:
         XCODE_WORKSPACE: "Unity-iPhone.xcodeproj"
