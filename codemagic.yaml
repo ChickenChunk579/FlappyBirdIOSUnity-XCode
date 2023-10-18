@@ -1,0 +1,31 @@
+workflows:
+  unity_ios_release_workflow:
+    name: Unity iOS release workflow
+    max_build_duration: 120
+    instance_type: mac_mini
+    environment:
+      vars:
+        XCODE_WORKSPACE: "Unity-iPhone.xcodeproj"
+        XCODE_SCHEME: "Unity-iPhone"
+      xcode: 12.0
+    scripts:
+      - name: Build the .xarchive
+        script: | 
+          xcodebuild archive \
+            -workspace "$XCODE_WORKSPACE" \
+            -scheme "$XCODE_SCHEME" \
+            -archivePath "build/Unity-iPhone.xcarchive" \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS,arch=arm64' \
+            -configuration Release \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO 
+      - name: Export .ipa
+        script: |
+          xcodebuild -exportArchive \
+            -archivePath "build/Unity-iPhone.xcarchive" \
+            -exportPath "build/Unity-iPhone.ipa" \
+            -exportOptionsPlist "ExportOptions.plist"
+    artifacts:
+      - build/**/outputs/**/*.ipa
