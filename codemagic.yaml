@@ -7,7 +7,7 @@ workflows:
       vars:
         XCODE_WORKSPACE: "Unity-iPhone.xcodeproj"
         XCODE_SCHEME: "Unity-iPhone"
-      xcode: 12.0
+      xcode: 14.2
     scripts:
       - name: Build the .xarchive
         script: | 
